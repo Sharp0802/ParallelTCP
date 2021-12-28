@@ -14,7 +14,7 @@ public class SharedMessage
             Content = new byte[length];
     }
 
-    public SharedMessage(SharedMessageHeader header, byte[] content)
+    internal SharedMessage(SharedMessageHeader header, byte[] content)
     {
         Header = header;
         Content = new byte[content.Length];
