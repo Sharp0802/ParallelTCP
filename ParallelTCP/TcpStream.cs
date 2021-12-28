@@ -1,17 +1,17 @@
-﻿using System.Net.Sockets;
+﻿using System.Collections.Concurrent;
 
 namespace ParallelTCP;
 
 public class TcpStream
 {
-    public TcpStream(TcpClient client)
+    public TcpStream(Stream stream)
     {
-        Client = client;
-        Stream = Client.GetStream();
+        Stream = stream;
     }
+    
+    private Stream Stream { get; }
 
-    private TcpClient Client { get; }
-    private NetworkStream Stream { get; }
+    private ConcurrentQueue<Message> MessageQueue { get; } = new();
 
     private bool TryReadUnsafe<T>(out T? dst) where T : unmanaged
     {
@@ -38,13 +38,13 @@ public class TcpStream
         }
     }
 
-    private bool TryReadUnsafe(int count, out byte[]? dst)
+    private bool TryReadUnsafe(int length, out byte[]? dst)
     {
         try
         {
-            dst = new byte[count];
-            for (var i = 0; i < count;)
-                i += Stream.Read(dst, i, count - i);
+            dst = new byte[length];
+            for (var i = 0; i < length;)
+                i += Stream.Read(dst, i, length - i);
             return true;
         }
         catch (Exception e)
@@ -87,5 +87,35 @@ public class TcpStream
             if (e is not (IOException or ObjectDisposedException)) throw;
             return false;
         }
+    }
+
+    private Task Transmitter(CancellationToken token, TimeSpan frequency)
+    {
+        return Task.Factory.StartNew(() =>
+        {
+            while (!token.IsCancellationRequested)
+            {
+                if (!MessageQueue.TryDequeue(out var msg))
+                {
+                    Task.Delay(frequency, token).Wait(token);
+                    continue;
+                }
+                if (!TryWriteUnsafe(msg.ToBytes()))
+                    throw new InvalidOperationException("failed to write a message into stream");
+            }
+        }, TaskCreationOptions.None);
+    }
+
+    private Task Receiver(CancellationToken token)
+    {
+        return Task.Factory.StartNew(() =>
+        {
+            while (!token.IsCancellationRequested)
+            {
+                if (!TryReadUnsafe<MessageHeader>(out var header) || !TryReadUnsafe(header!.Value.Length, out var content))
+                    throw new InvalidOperationException("failed to read a message from stream");
+                var msg = new Message(header.Value, content!);
+            }
+        }, TaskCreationOptions.None);
     }
 }
