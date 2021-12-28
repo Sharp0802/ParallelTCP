@@ -2,9 +2,9 @@
 
 namespace ParallelTCP;
 
-public class TcpStream
+public class TcpChannel
 {
-    public TcpStream(Guid id, Stream stream)
+    public TcpChannel(Guid id, Stream stream)
     {
         StreamId = id;
         Stream = stream;
@@ -96,18 +96,13 @@ public class TcpStream
         }
     }
 
-    private Task Transmitter(CancellationToken token, TimeSpan frequency)
+    private Task Transmitter(CancellationToken token)
     {
         return Task.Factory.StartNew(() =>
         {
             while (!token.IsCancellationRequested)
             {
-                if (!MessageQueue.TryDequeue(out var msg))
-                {
-                    Task.Delay(frequency, token).Wait(token);
-                    continue;
-                }
-
+                if (!MessageQueue.TryDequeue(out var msg)) continue;
                 if (!TryWriteUnsafe(msg.ToBytes()))
                     throw new InvalidOperationException("failed to write a message into stream");
                 MessageTransmitted.InvokeAsync(this, new MessageEventArgs(StreamId, msg));
@@ -129,6 +124,8 @@ public class TcpStream
         }, TaskCreationOptions.None);
     }
 
+    public Task RunAsync(CancellationToken token) => Task.WhenAll(Transmitter(token), Receiver(token));
+
     public Task<Message?> TransmitToReceive(Message msg)
     {
         var result = default(Message);
@@ -138,16 +135,25 @@ public class TcpStream
         {
             return Task.Factory.StartNew(() =>
             {
-                result = args.Message;
-                waiter.Set();
-                waiter.Close();
-                waiter.Dispose();
-                MessageReceived -= Handler;
+                try
+                {
+                    result = args.Message;
+                    waiter.Set();
+                    waiter.Close();
+                    waiter.Dispose();
+                    MessageReceived -= Handler;
+                }
+                catch (Exception)
+                {
+#if DEBUG
+                    throw;
+#endif
+                }
             });
         }
 
         MessageReceived += Handler;
-        return QueueMessage(msg, true).ContinueWith(_ =>
+        return QueueMessage(msg).ContinueWith(_ =>
         {
             if (!waiter.WaitOne())
                 throw new InvalidOperationException("failed to wait one via AutoResetEvent");
@@ -155,36 +161,37 @@ public class TcpStream
         });
     }
 
-    public Task QueueMessage(Message msg, bool waitForTransmitting)
+    public Task QueueMessage(Message msg)
     {
-        if (waitForTransmitting)
-        {
-            var waiter = new AutoResetEvent(false);
+        var waiter = new AutoResetEvent(false);
 
-            Task TransmitChecker(object? sender, MessageEventArgs args)
+        Task TransmitChecker(object? sender, MessageEventArgs args)
+        {
+            return Task.Factory.StartNew(() =>
             {
-                return Task.Factory.StartNew(() =>
+                if (!args.Message.Header.MessageId.Equals(msg.Header.MessageId)) return;
+                try
                 {
-                    if (!args.Message.Header.MessageId.Equals(msg.Header.MessageId)) return;
                     waiter.Set();
                     waiter.Close();
                     waiter.Dispose();
                     MessageTransmitted -= TransmitChecker;
-                });
-            }
-
-            MessageTransmitted += TransmitChecker;
-            return Task.Factory.StartNew(() =>
-            {
-                MessageQueue.Enqueue(msg);
-                if (!waiter.WaitOne())
-                    throw new InvalidOperationException("failed to wait one via AutoResetEvent");
+                }
+                catch (Exception)
+                {
+#if DEBUG
+                    throw;
+#endif
+                }
             });
         }
-        else
+
+        MessageTransmitted += TransmitChecker;
+        return Task.Factory.StartNew(() =>
         {
             MessageQueue.Enqueue(msg);
-            return Task.CompletedTask;
-        }
+            if (!waiter.WaitOne())
+                throw new InvalidOperationException("failed to wait one via AutoResetEvent");
+        });
     }
 }
