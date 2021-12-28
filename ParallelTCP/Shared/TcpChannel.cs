@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
+using ParallelTCP.Common;
 
-namespace ParallelTCP;
+namespace ParallelTCP.Shared;
 
 public class TcpChannel
 {

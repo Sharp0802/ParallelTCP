@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace ParallelTCP;
+namespace ParallelTCP.Common;
 
 [type: CLSCompliant(true), NativeCppClass, Serializable]
 public struct MessageHeader

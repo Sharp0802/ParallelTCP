@@ -1,4 +1,4 @@
-﻿namespace ParallelTCP;
+﻿namespace ParallelTCP.Common;
 
 public static class AsyncEvent
 {
