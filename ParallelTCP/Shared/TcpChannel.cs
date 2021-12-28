@@ -14,10 +14,10 @@ public class TcpChannel
     private Guid StreamId { get; }
     private Stream Stream { get; }
 
-    private ConcurrentQueue<Message> MessageQueue { get; } = new();
+    private ConcurrentQueue<SharedMessage> MessageQueue { get; } = new();
 
-    public event MessageEventHandler? MessageReceived;
-    public event MessageEventHandler? MessageTransmitted;
+    public event SharedMessageEventHandler? MessageReceived;
+    public event SharedMessageEventHandler? MessageTransmitted;
 
     private bool TryReadUnsafe<T>(out T? dst) where T : unmanaged
     {
@@ -106,7 +106,7 @@ public class TcpChannel
                 if (!MessageQueue.TryDequeue(out var msg)) continue;
                 if (!TryWriteUnsafe(msg.ToBytes()))
                     throw new InvalidOperationException("failed to write a message into stream");
-                MessageTransmitted.InvokeAsync(this, new MessageEventArgs(StreamId, msg));
+                MessageTransmitted.InvokeAsync(this, new SharedMessageEventArgs(StreamId, msg));
             }
         }, TaskCreationOptions.None);
     }
@@ -117,28 +117,29 @@ public class TcpChannel
         {
             while (!token.IsCancellationRequested)
             {
-                if (!TryReadUnsafe<MessageHeader>(out var header) ||
+                if (!TryReadUnsafe<SharedMessageHeader>(out var header) ||
                     !TryReadUnsafe(header!.Value.Length, out var content))
                     throw new InvalidOperationException("failed to read a message from stream");
-                MessageReceived.InvokeAsync(this, new MessageEventArgs(StreamId, new Message(header.Value, content!)));
+                MessageReceived.InvokeAsync(this, new SharedMessageEventArgs(StreamId, new SharedMessage(header.Value, content!)));
             }
         }, TaskCreationOptions.None);
     }
 
     public Task RunAsync(CancellationToken token) => Task.WhenAll(Transmitter(token), Receiver(token));
 
-    public Task<Message?> TransmitToReceive(Message msg)
+    public Task<SharedMessage?> TransmitToReceive(SharedMessage msg)
     {
-        var result = default(Message);
+        var result = default(SharedMessage);
         var waiter = new AutoResetEvent(false);
 
-        Task Handler(object? sender, MessageEventArgs args)
+        Task Handler(object? sender, SharedMessageEventArgs args)
         {
             return Task.Factory.StartNew(() =>
             {
                 try
                 {
-                    result = args.Message;
+                    if (!args.SharedMessage.Header.ReplyTo.Equals(msg.Header.MessageId)) return;
+                    result = args.SharedMessage;
                     waiter.Set();
                     waiter.Close();
                     waiter.Dispose();
@@ -162,15 +163,15 @@ public class TcpChannel
         });
     }
 
-    public Task QueueMessage(Message msg)
+    public Task QueueMessage(SharedMessage msg)
     {
         var waiter = new AutoResetEvent(false);
 
-        Task TransmitChecker(object? sender, MessageEventArgs args)
+        Task TransmitChecker(object? sender, SharedMessageEventArgs args)
         {
             return Task.Factory.StartNew(() =>
             {
-                if (!args.Message.Header.MessageId.Equals(msg.Header.MessageId)) return;
+                if (!args.SharedMessage.Header.MessageId.Equals(msg.Header.MessageId)) return;
                 try
                 {
                     waiter.Set();

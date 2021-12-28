@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace ParallelTCP.Common;
+namespace ParallelTCP.Shared;
 
 [type: CLSCompliant(true), NativeCppClass, Serializable]
-public struct MessageHeader
+public struct SharedMessageHeader
 {
     public Guid MessageId;
     public Guid ReplyTo;

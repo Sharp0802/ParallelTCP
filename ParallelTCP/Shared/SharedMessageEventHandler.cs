@@ -1,15 +1,15 @@
-﻿namespace ParallelTCP.Common;
+﻿namespace ParallelTCP.Shared;
 
-public delegate Task MessageEventHandler(object? sender, MessageEventArgs args);
+public delegate Task SharedMessageEventHandler(object? sender, SharedMessageEventArgs args);
 
-public class MessageEventArgs : EventArgs
+public class SharedMessageEventArgs : EventArgs
 {
-    public MessageEventArgs(Guid streamId, Message message)
+    public SharedMessageEventArgs(Guid streamId, SharedMessage sharedMessage)
     {
         StreamId = streamId;
-        Message = message;
+        SharedMessage = sharedMessage;
     }
 
     public Guid StreamId { get; }
-    public Message Message { get; }
+    public SharedMessage SharedMessage { get; }
 }
