@@ -4,14 +4,19 @@ namespace ParallelTCP;
 
 public class TcpStream
 {
-    public TcpStream(Stream stream)
+    public TcpStream(Guid id, Stream stream)
     {
+        StreamId = id;
         Stream = stream;
     }
-    
+
+    private Guid StreamId { get; }
     private Stream Stream { get; }
 
     private ConcurrentQueue<Message> MessageQueue { get; } = new();
+
+    public event MessageEventHandler MessageReceived;
+    public event MessageEventHandler MessageTransmitted;
 
     private bool TryReadUnsafe<T>(out T? dst) where T : unmanaged
     {
@@ -28,6 +33,7 @@ public class TcpStream
                     Buffer.MemoryCopy(pBuffer, pLiteralBuffer, sizeof(T), sizeof(T));
                 dst = literalBuffer;
             }
+
             return true;
         }
         catch (Exception e)
@@ -66,6 +72,7 @@ public class TcpStream
                     Buffer.MemoryCopy(&src, pBuffer, sizeof(T), sizeof(T));
                 Stream.Write(buffer, 0, buffer.Length);
             }
+
             return true;
         }
         catch (Exception e)
@@ -100,8 +107,10 @@ public class TcpStream
                     Task.Delay(frequency, token).Wait(token);
                     continue;
                 }
+
                 if (!TryWriteUnsafe(msg.ToBytes()))
                     throw new InvalidOperationException("failed to write a message into stream");
+                MessageTransmitted.InvokeAsync(this, new MessageEventArgs(StreamId, msg));
             }
         }, TaskCreationOptions.None);
     }
@@ -112,10 +121,70 @@ public class TcpStream
         {
             while (!token.IsCancellationRequested)
             {
-                if (!TryReadUnsafe<MessageHeader>(out var header) || !TryReadUnsafe(header!.Value.Length, out var content))
+                if (!TryReadUnsafe<MessageHeader>(out var header) ||
+                    !TryReadUnsafe(header!.Value.Length, out var content))
                     throw new InvalidOperationException("failed to read a message from stream");
-                var msg = new Message(header.Value, content!);
+                MessageReceived.InvokeAsync(this, new MessageEventArgs(StreamId, new Message(header.Value, content!)));
             }
         }, TaskCreationOptions.None);
+    }
+
+    public Task<Message?> TransmitToReceive(Message msg)
+    {
+        var result = default(Message);
+        var waiter = new AutoResetEvent(false);
+
+        Task Handler(object? sender, MessageEventArgs args)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                result = args.Message;
+                waiter.Set();
+                waiter.Close();
+                waiter.Dispose();
+                MessageReceived -= Handler;
+            });
+        }
+
+        MessageReceived += Handler;
+        return QueueMessage(msg, true).ContinueWith(_ =>
+        {
+            if (!waiter.WaitOne())
+                throw new InvalidOperationException("failed to wait one via AutoResetEvent");
+            return result;
+        });
+    }
+
+    public Task QueueMessage(Message msg, bool waitForTransmitting)
+    {
+        if (waitForTransmitting)
+        {
+            var waiter = new AutoResetEvent(false);
+
+            Task TransmitChecker(object? sender, MessageEventArgs args)
+            {
+                return Task.Factory.StartNew(() =>
+                {
+                    if (!args.Message.Header.MessageId.Equals(msg.Header.MessageId)) return;
+                    waiter.Set();
+                    waiter.Close();
+                    waiter.Dispose();
+                    MessageTransmitted -= TransmitChecker;
+                });
+            }
+
+            MessageTransmitted += TransmitChecker;
+            return Task.Factory.StartNew(() =>
+            {
+                MessageQueue.Enqueue(msg);
+                if (!waiter.WaitOne())
+                    throw new InvalidOperationException("failed to wait one via AutoResetEvent");
+            });
+        }
+        else
+        {
+            MessageQueue.Enqueue(msg);
+            return Task.CompletedTask;
+        }
     }
 }
