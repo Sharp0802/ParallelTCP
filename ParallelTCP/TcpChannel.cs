@@ -15,8 +15,8 @@ public class TcpChannel
 
     private ConcurrentQueue<Message> MessageQueue { get; } = new();
 
-    public event MessageEventHandler MessageReceived;
-    public event MessageEventHandler MessageTransmitted;
+    public event MessageEventHandler? MessageReceived;
+    public event MessageEventHandler? MessageTransmitted;
 
     private bool TryReadUnsafe<T>(out T? dst) where T : unmanaged
     {
