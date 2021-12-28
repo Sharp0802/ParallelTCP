@@ -1,6 +1,6 @@
 ﻿namespace ParallelTCP.Shared;
 
-public class NetworkMessage
+public class NetworkMessage : IMessage
 {
     internal NetworkMessage(NetworkMessageHeader header, byte[] content)
     {

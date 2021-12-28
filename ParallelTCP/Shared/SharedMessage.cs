@@ -1,6 +1,6 @@
 ﻿namespace ParallelTCP.Shared;
 
-public class SharedMessage
+public class SharedMessage : IMessage
 {
     public SharedMessage(Guid replyTo, int length, bool allocContent)
     {
