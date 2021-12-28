@@ -13,6 +13,13 @@ public class Message
         if (allocContent)
             Content = new byte[length];
     }
+
+    public Message(MessageHeader header, byte[] content)
+    {
+        Header = header;
+        Content = new byte[content.Length];
+        Buffer.BlockCopy(content, 0, Content, 0, content.Length);
+    }
     
     public MessageHeader Header { get; }
     public byte[] Content { get; }
