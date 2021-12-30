@@ -1,37 +1,50 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-using Microsoft.IO;
+using System.Runtime.CompilerServices;
 using ParallelTCP.Common;
 using ParallelTCP.Shared;
 
 namespace ParallelTCP.ClientSide;
 
-public class Client
+public class Client : IDisposable
 {
+    public Client(IPEndPoint remoteEndpoint)
+    {
+        RemoteEndpoint = remoteEndpoint;
+    }
+
     private IPEndPoint RemoteEndpoint { get; }
 
     private TcpClient? TcpClient { get; set; }
     private NetworkStream? NetworkStream { get; set; }
 
-    private static RecyclableMemoryStreamManager StreamManager { get; } = StreamManagerAllocator.Allocate();
     private ConcurrentDictionary<Guid, MessageChannel> Channels { get; } = new();
     private ConcurrentQueue<NetworkMessage> MessageQueue { get; } = new();
+    private List<Task> TaskList { get; } = new();
+    private object TaskListLocker { get; } = new();
 
     public event NetworkMessageEventHandler? MessageReceived;
     public event NetworkMessageEventHandler? MessageTransmitted;
+    public event NetworkConnectionEventHandler? ServerDisconnected;
+    public event NetworkConnectionEventHandler? ServerConnected;
 
-    public async Task RunAsync(CancellationToken token)
+    private void RegisterTask(Func<Task> task)
     {
-        await InitializeAsync();
-        await Task.WhenAll(Transmitter(token), Receiver(token));
+        lock (TaskListLocker) TaskList.Add(task.Invoke());
+    }
+
+    public Task RunAsync(CancellationToken token)
+    {
+        return Task.WhenAll(Transmitter(token), Receiver(token));
     }
     
-    private async Task InitializeAsync()
+    public async Task ConnectAsync()
     {
         TcpClient = new TcpClient();
         await TcpClient.ConnectAsync(RemoteEndpoint.Address, RemoteEndpoint.Port);
         NetworkStream = TcpClient.GetStream();
+        RegisterTask(() => ServerConnected.InvokeAsync(this, new NetworkConnectionEventArgs(RemoteEndpoint)));
     }
 
     private Task Transmitter(CancellationToken token)
@@ -43,8 +56,11 @@ public class Client
             {
                 if (!MessageQueue.TryDequeue(out var msg)) continue;
                 if (!NetworkStream.TryWriteUnsafe(msg.ToBytes()))
-                    throw new InvalidOperationException("failed to write a message into stream");
-                MessageTransmitted.InvokeAsync(this, new NetworkMessageEventArgs(msg));
+                {
+                    RegisterTask(() => ServerDisconnected.InvokeAsync(this, new NetworkConnectionEventArgs(RemoteEndpoint)));
+                    break;
+                }
+                RegisterTask(() => MessageTransmitted.InvokeAsync(this, new NetworkMessageEventArgs(msg)));
             }
         }, TaskCreationOptions.None);
     }
@@ -58,9 +74,12 @@ public class Client
             {
                 if (!NetworkStream.TryReadUnsafe<NetworkMessageHeader>(out var header) ||
                     !NetworkStream.TryReadUnsafe(header!.Value.SharedHeader.Length, out var content))
-                    throw new InvalidOperationException("failed to read a message from stream");
-                MessageReceived.InvokeAsync(this,
-                    new NetworkMessageEventArgs(new NetworkMessage(header.Value, content!)));
+                {
+                    RegisterTask(() => ServerDisconnected.InvokeAsync(this, new NetworkConnectionEventArgs(RemoteEndpoint)));
+                    break;
+                }
+                RegisterTask(() => MessageReceived.InvokeAsync(this,
+                    new NetworkMessageEventArgs(new NetworkMessage(header.Value, content!))));
             }
         }, TaskCreationOptions.None);
     }
@@ -98,6 +117,22 @@ public class Client
 
     public MessageChannel GetChannel(Guid guid)
     {
-        return Channels.GetOrAdd(guid, id => AllocChannel(id));
+        return Channels.GetOrAdd(guid, AllocChannel);
+    }
+
+    [method: MethodImpl(MethodImplOptions.Synchronized)]
+    public async Task EnsureDisconnectAsync()
+    {
+        await Task.WhenAll(TaskList.ToArray());
+        NetworkStream?.Dispose();
+        NetworkStream = null;
+        TcpClient?.Close();
+        TcpClient?.Dispose();
+        TcpClient = null;
+    }
+    
+    public void Dispose()
+    {
+        EnsureDisconnectAsync().Wait();
     }
 }
