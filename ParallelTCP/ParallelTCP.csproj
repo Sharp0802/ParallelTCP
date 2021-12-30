@@ -9,8 +9,4 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="ServerSide" />
-    </ItemGroup>
-
 </Project>
