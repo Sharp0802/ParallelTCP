@@ -2,7 +2,7 @@
 
 public static class AsyncEvent
 {
-    public static Task InvokeAsync<TEventArgs>(this Delegate? @event, object? sender, TEventArgs args) where TEventArgs : EventArgs
+    internal static Task InvokeAsync<TEventArgs>(this Delegate? @event, object? sender, TEventArgs args) where TEventArgs : EventArgs
     {
         return @event is null 
             ? Task.CompletedTask 

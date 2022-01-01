@@ -1,5 +1,4 @@
-﻿using ParallelTCP.Shared;
-using ParallelTCP.Shared.Messages;
+﻿using ParallelTCP.Shared.Messages;
 
 namespace ParallelTCP.Common;
 
