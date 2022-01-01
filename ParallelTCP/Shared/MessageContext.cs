@@ -44,7 +44,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
 
     private event NetworkMessageEventHandler? MessageReceived;
 
-    public event NetworkConnectionEventHandler? Disconnecting;
+    public event NetworkConnectionEventHandler? Disconnected;
 
     private MessageChannel AllocChannel(Guid guid)
     {
@@ -101,7 +101,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
             Disposed = true;
         }
 
-        await Disconnecting.InvokeAsync(this, new NetworkConnectionEventArgs(this));
+        await Disconnected.InvokeAsync(this, new NetworkConnectionEventArgs(this));
     }
 
     public async ValueTask DisposeAsync()
