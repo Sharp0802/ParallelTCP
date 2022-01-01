@@ -100,15 +100,6 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
     }
 
     /// <summary>
-    /// Allocates and Assign new <see cref="ParallelTCP.Shared.MessageChannel"/>
-    /// </summary>
-    /// <returns>the requested channel.</returns>
-    public Task<MessageChannel> GetChannelAsync()
-    {
-        return Task.FromResult(Channels.GetOrAdd(Guid.NewGuid(), AllocChannel));
-    }
-
-    /// <summary>
     /// Allocate and Assign new <see cref="ParallelTCP.Shared.MessageChannel"/> to the
     /// <see cref="ParallelTCP.Shared.MessageContext"/> with <paramref name="guid"/>. if the <paramref name="guid"/>
     /// does not already exist, or returns the existing <see cref="ParallelTCP.Shared.MessageChannel"/> if the
