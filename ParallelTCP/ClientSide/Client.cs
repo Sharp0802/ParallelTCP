@@ -7,9 +7,9 @@ namespace ParallelTCP.ClientSide;
 public class Client : IAsyncDisposable
 {
     /// <summary>
-    /// Create new <see cref="ParallelTCP.ClientSide.Client"/>
+    /// Create new <see cref="Client"/>
     /// </summary>
-    /// <param name="endpoint">The <see cref="System.Net.EndPoint"/> to connect</param>
+    /// <param name="endpoint">The <see cref="EndPoint"/> to connect</param>
     public Client(IPEndPoint endpoint)
     {
         RemoteEndPoint = endpoint;
@@ -17,9 +17,21 @@ public class Client : IAsyncDisposable
 
     private Task Runner { get; set; } = Task.CompletedTask;
     
+    /// <summary>
+    /// Gets the remote endpoint
+    /// </summary>
+    /// <returns>The <see cref="System.Net.EndPoint"/> with which the <see cref="Client"/>
+    /// communicating.</returns>
     public IPEndPoint RemoteEndPoint { get; }
+    
+    /// <summary>
+    /// Gets the message context
+    /// </summary>
+    /// <returns>The <see cref="ParallelTCP.Shared.MessageContext"/> that the
+    /// <see cref="ParallelTCP.ServerSide.Server"/> is using for communications.</returns>
     public MessageContext? MessageContext { get; private set; }
 
+    /// <inheritdoc cref="ParallelTCP.Shared.MessageContext.RunAsync()"/>
     public async Task OpenAsync()
     {
         var client = new TcpClient();
@@ -28,6 +40,10 @@ public class Client : IAsyncDisposable
         Runner = MessageContext.RunAsync();
     }
 
+    /// <summary>
+    /// Disconnects and Disposes this <see cref="Client"/> instance and requests that the
+    /// underlying TCP connection be closed.
+    /// </summary>
     public async Task ShutdownAsync()
     {
         if (MessageContext is not null)
@@ -35,11 +51,13 @@ public class Client : IAsyncDisposable
         await Runner;
     }
 
+    /// <inheritdoc cref="ShutdownAsync()"/>
     public async ValueTask DisposeAsync()
     {
         await ShutdownAsync();
     }
 
+    /// <inheritdoc cref="ShutdownAsync()"/>
     public void Dispose()
     {
         ShutdownAsync().Wait();
