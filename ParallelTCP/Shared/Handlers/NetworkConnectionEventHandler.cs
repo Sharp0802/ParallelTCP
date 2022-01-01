@@ -1,6 +1,4 @@
-﻿using ParallelTCP.ServerSide;
-
-namespace ParallelTCP.Shared;
+﻿namespace ParallelTCP.Shared.Handlers;
 
 
 public delegate Task NetworkConnectionEventHandler(object? sender, NetworkConnectionEventArgs args);

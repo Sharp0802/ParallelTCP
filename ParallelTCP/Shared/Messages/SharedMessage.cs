@@ -1,4 +1,4 @@
-﻿namespace ParallelTCP.Shared;
+﻿namespace ParallelTCP.Shared.Messages;
 
 public class SharedMessage : IMessage
 {

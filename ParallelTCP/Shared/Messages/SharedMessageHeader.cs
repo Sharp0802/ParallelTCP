@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace ParallelTCP.Shared;
+namespace ParallelTCP.Shared.Messages;
 
 [type: CLSCompliant(true), NativeCppClass, Serializable]
 public struct SharedMessageHeader

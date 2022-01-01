@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using ParallelTCP.Common;
+using ParallelTCP.Shared.Handlers;
+using ParallelTCP.Shared.Messages;
 
 namespace ParallelTCP.Shared;
 

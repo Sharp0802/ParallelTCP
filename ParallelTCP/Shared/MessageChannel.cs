@@ -1,5 +1,7 @@
 ﻿using System.Net.Sockets;
 using ParallelTCP.Common;
+using ParallelTCP.Shared.Handlers;
+using ParallelTCP.Shared.Messages;
 
 namespace ParallelTCP.Shared;
 

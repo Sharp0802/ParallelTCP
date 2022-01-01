@@ -1,4 +1,6 @@
-﻿namespace ParallelTCP.Shared;
+﻿using ParallelTCP.Shared.Messages;
+
+namespace ParallelTCP.Shared.Handlers;
 
 public delegate Task NetworkMessageEventHandler(object? sender, NetworkMessageEventArgs args);
 
