@@ -8,6 +8,9 @@ public class NetworkMessage : IMessage
         Content = content;
     }
     
+    /// <summary>
+    /// Gets the header
+    /// </summary>
     public NetworkMessageHeader Header { get; }
     public byte[] Content { get; }
 

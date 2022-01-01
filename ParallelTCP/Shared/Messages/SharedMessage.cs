@@ -2,16 +2,20 @@
 
 public class SharedMessage : IMessage
 {
-    public SharedMessage(Guid replyTo, int length, bool allocContent)
+    /// <summary>
+    /// Allocate new <see cref="SharedMessage"/>
+    /// </summary>
+    /// <param name="replyTo"><see cref="System.Guid"/> identifier of the message to reply</param>
+    /// <param name="content">the content of a message</param>
+    public SharedMessage(Guid replyTo, byte[] content)
     {
         Header = new SharedMessageHeader
         {
-            Length = length,
+            Length = content.Length,
             MessageId = Guid.NewGuid(),
             ReplyTo = replyTo
         };
-        if (allocContent)
-            Content = new byte[length];
+        Content = content;
     }
 
     internal SharedMessage(SharedMessageHeader header, byte[] content)
@@ -21,6 +25,9 @@ public class SharedMessage : IMessage
         Buffer.BlockCopy(content, 0, Content, 0, content.Length);
     }
     
+    /// <summary>
+    /// Gets the header
+    /// </summary>
     public SharedMessageHeader Header { get; }
     public byte[] Content { get; }
 

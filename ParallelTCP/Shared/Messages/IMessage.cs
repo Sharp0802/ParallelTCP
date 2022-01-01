@@ -3,13 +3,13 @@
 public interface IMessage
 {
     /// <summary>
-    /// Content of this message
+    /// Gets the content
     /// </summary>
     public byte[] Content { get; }
     
     /// <summary>
-    /// Serialize this message into a byte array
+    /// Serialize this into <see cref="byte"/>[]
     /// </summary>
-    /// <returns>the serialization result of this message</returns>
+    /// <returns>the serialization result</returns>
     public byte[] ToBytes();
 }
