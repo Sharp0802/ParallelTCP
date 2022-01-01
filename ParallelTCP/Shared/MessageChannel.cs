@@ -15,7 +15,7 @@ public class MessageChannel
     }
 
     /// <summary>
-    /// Guid of this channel
+    /// Gets the identifier
     /// </summary>
     public Guid ChannelGuid { get; }
     
@@ -23,7 +23,7 @@ public class MessageChannel
     private object LockHandle { get; }
 
     /// <summary>
-    /// Event handler for message received event
+    /// Raised when received a message.
     /// </summary>
     public event SharedMessageEventHandler MessageReceived
     {
@@ -51,10 +51,10 @@ public class MessageChannel
     }
 
     /// <summary>
-    /// Send a message asynchronously with channel
+    /// Send <see cref="ParallelTCP.Shared.Messages.SharedMessage"/> asynchronously
     /// </summary>
     /// <param name="msg">a message to send</param>
-    /// <exception cref="IOException">if client/server already disconnected from server/client, then throw this exception.</exception>
+    /// <exception cref="IOException">if already disconnected from server/client.</exception>
     // ReSharper disable once SuggestBaseTypeForParameter
     public Task SendAsync(SharedMessage msg)
     {
@@ -73,12 +73,12 @@ public class MessageChannel
     }
 
     /// <summary>
-    /// Send a message asynchronously with channel
+    /// Send <see cref="ParallelTCP.Shared.Messages.SharedMessage"/> asynchronously
     /// </summary>
     /// <param name="msg">a message to send</param>
     /// <param name="options">message sending options</param>
-    /// <exception cref="IOException">if client/server already disconnected from server/client, then throw this exception.</exception>
-    /// <returns>if succeed to send and wait for replying message(if turn on in options), true. otherwise, false.</returns>
+    /// <exception cref="IOException">if client/server already disconnected from server/client.</exception>
+    /// <returns>true if succeed to send and wait for replying message(if turn on in options). otherwise, false.</returns>
     public async Task<bool> SendAsync(SharedMessage msg, MessageTransmitOptions options)
     {
         if (!options.WaitForReply)
