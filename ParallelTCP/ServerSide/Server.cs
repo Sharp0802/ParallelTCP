@@ -19,7 +19,7 @@ public class Server : IAsyncDisposable, IDisposable
     private object LockHandle { get; } = new();
     
     private TcpListener TcpListener { get; }
-    private ConcurrentDictionary<Guid, MessageContext> Contexts { get; } = new();
+    private ConcurrentDictionary<Guid, (MessageContext Context, Task Runner)> Containers { get; } = new();
     private CancellationTokenSource ShutdownTokenSource { get; } = new();
 
     public IPEndPoint LocalEndpoint { get; }
@@ -45,14 +45,14 @@ public class Server : IAsyncDisposable, IDisposable
                 try
                 {
                     context = new MessageContext(guid, TcpListener.AcceptTcpClient(), new object(), ShutdownTokenSource.Token);
-                    if (!Contexts.TryAdd(guid, context))
+                    if (!Containers.TryAdd(guid, (context, context.RunAsync())))
                         throw new AmbiguousMatchException("guid is overlapped");
                 }
                 catch (Exception)
                 {
                     break;
                 }
-                context.Disconnected += (_, args) => Task.FromResult(Contexts.TryRemove(args.Context.Guid, out var _));
+                context.Disconnected += (_, args) => Task.FromResult(Containers.TryRemove(args.Context.Guid, out var _));
                 tasks.Add(ClientConnected.InvokeAsync(this, new NetworkConnectionEventArgs(context)));
             }
         }, TaskCreationOptions.None);
@@ -69,7 +69,7 @@ public class Server : IAsyncDisposable, IDisposable
             TcpListener.Stop();
             Disposed = true;
         }
-        await Task.WhenAll(Contexts.Select(pair => pair.Value.DisconnectAsync()).ToArray());
+        await Task.WhenAll(Containers.Select(pair => pair.Value.Context.DisconnectAsync()).ToArray());
         await Shutdown.InvokeAsync(this, new NetworkConnectionEventArgs(null));
     }
     
