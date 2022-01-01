@@ -93,6 +93,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
 
         if (!Channels.TryAdd(guid, channel))
             throw new AmbiguousMatchException("guid is overlapped");
+        channel.MessageSendingFailed += (_, _) => DisconnectAsync();
         MessageReceived += (_, args) => args.Message.Header.ChannelGuid == guid
             ? channel.OnMessageReceived(new SharedMessage(args.Message.Header.SharedHeader, args.Message.Content))
             : Task.CompletedTask;
@@ -125,7 +126,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
                 NetworkMessage? msg;
                 try
                 {
-                    if (!Stream.TryReadNetworkMessage(LockHandle, out msg)) throw new IOException();
+                    if (!Stream.TryReadNetworkMessage(out msg)) throw new IOException();
                 }
                 catch (IOException)
                 {
@@ -149,6 +150,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
         {
             if (Disposed) return;
             Client.Close();
+            Channels.Clear();
             Disposed = true;
         }
 

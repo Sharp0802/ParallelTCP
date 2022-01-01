@@ -45,6 +45,8 @@ public class MessageChannel
 
     private event SharedMessageEventHandler? InterMessageReceived;
 
+    internal event NetworkConnectionEventHandler? MessageSendingFailed;
+
     internal Task OnMessageReceived(SharedMessage msg)
     {
         return InterMessageReceived.InvokeAsync(this, new SharedMessageEventArgs(ChannelGuid, msg));
@@ -68,7 +70,10 @@ public class MessageChannel
                 },
                 msg.Content);
             if (!Stream.TryWriteMessage(LockHandle, networkMsg))
+            {
+                MessageSendingFailed.InvokeAsync(this, new NetworkConnectionEventArgs(null)).Wait();
                 throw new IOException("failed to write a message into the network stream");
+            }
         });
     }
 

@@ -76,7 +76,7 @@ public class Server : IAsyncDisposable, IDisposable
                 {
                     break;
                 }
-                context.Disconnected += (_, args) => Task.FromResult(Containers.TryRemove(args.Context.Guid, out var _));
+                context.Disconnected += (_, _) => Task.FromResult(Containers.TryRemove(guid, out _));
                 tasks.Add(ClientConnected.InvokeAsync(this, new NetworkConnectionEventArgs(context)));
             }
         }, TaskCreationOptions.None);
