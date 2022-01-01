@@ -8,13 +8,13 @@ internal static class Program
 {
     private static async Task Main()
     {
-        Console.Write("write the port to communicate:");
-        if (!int.TryParse(Console.ReadLine() ?? string.Empty, out var port))
+        Console.Write("write the endpoint to communicate:");
+        if (!IPEndPoint.TryParse(Console.ReadLine() ?? string.Empty, out var endpoint))
         {
-            Console.WriteLine("error: cannot parse port number.");
+            Console.WriteLine("error: cannot parse endpoint.");
             return;
         }
-        await using var client = new ClientSide.Client(new IPEndPoint(IPAddress.Any, port));
+        await using var client = new ClientSide.Client(endpoint);
         await client.OpenAsync();
         var channel = await client.MessageContext!.GetChannelAsync(Guid.Empty);
         channel.MessageReceived += (_, args) =>
