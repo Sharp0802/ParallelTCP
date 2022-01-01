@@ -3,14 +3,14 @@
 namespace ParallelTCP.Shared;
 
 
-public delegate Task NetworkConnectionEventHandler(object? sender, NetworkMessageEventArgs args);
+public delegate Task NetworkConnectionEventHandler(object? sender, NetworkConnectionEventArgs args);
 
 public class NetworkConnectionEventArgs : EventArgs
 {
-    public NetworkConnectionEventArgs(MessageContext context)
+    public NetworkConnectionEventArgs(MessageContext? context)
     {
         Context = context;
     }
 
-    public MessageContext Context { get; }
+    public MessageContext? Context { get; }
 }
