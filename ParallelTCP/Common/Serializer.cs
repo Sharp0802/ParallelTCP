@@ -47,17 +47,14 @@ public static class Serializer
         }
     }
 
-    internal static bool TryReadNetworkMessage(this Stream? stream, object locker, out NetworkMessage? msg)
+    internal static bool TryReadNetworkMessage(this Stream? stream, out NetworkMessage? msg)
     {
-        msg = null;
-        NetworkMessageHeader? header;
-        byte[]? content;
-        lock (locker)
+        if (stream is null ||
+            !stream.TryReadUnsafe(out NetworkMessageHeader? header) ||
+            !stream.TryReadUnsafe(header!.Value.SharedHeader.Length, out var content))
         {
-            if (stream is null ||
-                !stream.TryReadUnsafe(out header) || 
-                !stream.TryReadUnsafe(header!.Value.SharedHeader.Length, out content))
-                return false;
+            msg = null;
+            return false;
         }
         msg = new NetworkMessage(header.Value, content!);
         return true;
