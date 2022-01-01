@@ -1,13 +1,12 @@
-﻿using System.Text;
-using ParallelTCP.Shared;
+﻿using ParallelTCP.Shared;
 using ParallelTCP.Shared.Handlers;
 using ParallelTCP.Shared.Messages;
 
 namespace ParallelTCP.Test.Server;
 
-internal class Program
+internal static class Program
 {
-    private async Task Main()
+    private static async Task Main()
     {
         Console.Write("write the port to communicate:");
         if (!int.TryParse(Console.ReadLine() ?? string.Empty, out var port))
@@ -21,9 +20,9 @@ internal class Program
         await server.RunAsync();
     }
 
-    private List<(MessageContext Context, MessageChannel Channel)> Clients { get; } = new();
+    private static List<(MessageContext Context, MessageChannel Channel)> Clients { get; } = new();
 
-    private async Task ServerOnClientConnected(object? sender, NetworkConnectionEventArgs args)
+    private static async Task ServerOnClientConnected(object? sender, NetworkConnectionEventArgs args)
     {
         if (args.Context is null) return;
         var channel = await args.Context.GetChannelAsync(Guid.Empty);
@@ -31,7 +30,7 @@ internal class Program
         channel.MessageReceived += ChannelOnMessageReceived;
     }
 
-    private async Task ChannelOnMessageReceived(object? sender, SharedMessageEventArgs args)
+    private static async Task ChannelOnMessageReceived(object? sender, SharedMessageEventArgs args)
     {
         foreach (var (context, channel) in Clients)
         {
