@@ -1,105 +1,114 @@
-﻿using System.Collections.Concurrent;
+﻿using System.Net.Sockets;
 using ParallelTCP.Common;
 
 namespace ParallelTCP.Shared;
 
-public class MessageChannel : IDisposable
+public class MessageChannel
 {
-    public MessageChannel(Guid id)
+    internal MessageChannel(Guid channelGuid, NetworkStream stream, object lockHandle)
     {
-        StreamId = id;
+        ChannelGuid = channelGuid;
+        Stream = stream;
+        LockHandle = lockHandle;
     }
 
-    private Guid StreamId { get; }
+    /// <summary>
+    /// Guid of this channel
+    /// </summary>
+    public Guid ChannelGuid { get; }
+    
+    private NetworkStream Stream { get; }
+    private object LockHandle { get; }
 
-    private ConcurrentQueue<SharedMessage> MessageQueue { get; } = new();
-
-    public event SharedMessageEventHandler? MessageReceived;
-    public event SharedMessageEventHandler? MessageTransmitted;
-    public event CommonEventHandler? Disposing;
-
-    internal Task OnTransmitted(SharedMessage msg)
+    /// <summary>
+    /// Event handler for message received event
+    /// </summary>
+    public event SharedMessageEventHandler MessageReceived
     {
-        return MessageTransmitted.InvokeAsync(this, new SharedMessageEventArgs(StreamId, msg));
-    }
-
-    internal Task OnReceived(SharedMessage msg)
-    {
-        return MessageReceived.InvokeAsync(this, new SharedMessageEventArgs(StreamId, msg));
-    }
-
-    public Task<SharedMessage?> TransmitToReceive(SharedMessage msg)
-    {
-        var result = default(SharedMessage);
-        var waiter = new AutoResetEvent(false);
-
-        Task Handler(object? sender, SharedMessageEventArgs args)
+        add
         {
-            return Task.Factory.StartNew(() =>
+            lock (LockHandle)
             {
-                try
-                {
-                    if (!args.SharedMessage.Header.ReplyTo.Equals(msg.Header.MessageId)) return;
-                    result = args.SharedMessage;
-                    waiter.Set();
-                    waiter.Close();
-                    waiter.Dispose();
-                    MessageReceived -= Handler;
-                }
-                catch (Exception)
-                {
-#if DEBUG
-                    throw;
-#endif
-                }
-            });
+                InterMessageReceived += value;
+            }
         }
-
-        MessageReceived += Handler;
-        return QueueMessage(msg).ContinueWith(_ =>
+        remove
         {
-            if (!waiter.WaitOne())
-                throw new InvalidOperationException("failed to wait one via AutoResetEvent");
-            return result;
-        });
+            lock (LockHandle)
+            {
+                InterMessageReceived -= value;
+            }
+        }
     }
 
-    public Task QueueMessage(SharedMessage msg)
+    private event SharedMessageEventHandler? InterMessageReceived;
+
+    internal Task OnMessageReceived(SharedMessage msg)
     {
-        var waiter = new AutoResetEvent(false);
+        return InterMessageReceived.InvokeAsync(this, new SharedMessageEventArgs(ChannelGuid, msg));
+    }
 
-        Task TransmitChecker(object? sender, SharedMessageEventArgs args)
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                if (!args.SharedMessage.Header.MessageId.Equals(msg.Header.MessageId)) return;
-                try
-                {
-                    waiter.Set();
-                    waiter.Close();
-                    waiter.Dispose();
-                    MessageTransmitted -= TransmitChecker;
-                }
-                catch (Exception)
-                {
-#if DEBUG
-                    throw;
-#endif
-                }
-            });
-        }
-
-        MessageTransmitted += TransmitChecker;
+    /// <summary>
+    /// Send a message asynchronously with channel
+    /// </summary>
+    /// <param name="msg">a message to send</param>
+    /// <exception cref="IOException">if client/server already disconnected from server/client, then throw this exception.</exception>
+    // ReSharper disable once SuggestBaseTypeForParameter
+    public Task SendAsync(SharedMessage msg)
+    {
         return Task.Factory.StartNew(() =>
         {
-            MessageQueue.Enqueue(msg);
-            if (!waiter.WaitOne())
-                throw new InvalidOperationException("failed to wait one via AutoResetEvent");
+            var networkMsg = new NetworkMessage(
+                new NetworkMessageHeader
+                {
+                    SharedHeader = msg.Header, 
+                    ChannelGuid = ChannelGuid
+                },
+                msg.Content);
+            if (!Stream.TryWriteMessage(LockHandle, networkMsg))
+                throw new IOException("failed to write a message into the network stream");
         });
     }
 
-    public void Dispose()
+    /// <summary>
+    /// Send a message asynchronously with channel
+    /// </summary>
+    /// <param name="msg">a message to send</param>
+    /// <param name="options">message sending options</param>
+    /// <exception cref="IOException">if client/server already disconnected from server/client, then throw this exception.</exception>
+    /// <returns>if succeed to send and wait for replying message(if turn on in options), true. otherwise, false.</returns>
+    public async Task<bool> SendAsync(SharedMessage msg, MessageTransmitOptions options)
     {
-        Disposing.InvokeAsync(this, new CommonEventArgs()).Wait();
+        if (!options.WaitForReply)
+        {
+            await SendAsync(msg);
+            return true;
+        }
+
+        using var waiter = new EventWaitHandle(false, EventResetMode.AutoReset);
+
+        Task CheckReply(object? sender, SharedMessageEventArgs args)
+        {
+            if (args.SharedMessage.Header.ReplyTo == msg.Header.MessageId)
+            {
+                try
+                {
+                    // ReSharper disable once AccessToDisposedClosure
+                    waiter.Set();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+
+                MessageReceived -= CheckReply;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        MessageReceived += CheckReply;
+        await SendAsync(msg);
+
+        return waiter.WaitOne(options.WaitingTimeout);
     }
 }
