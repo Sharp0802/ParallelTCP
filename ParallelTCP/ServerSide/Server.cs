@@ -12,11 +12,13 @@ public class Server : IAsyncDisposable, IDisposable
     public Server(int port)
     {
         LocalEndpoint = new IPEndPoint(IPAddress.Any, port);
+        TcpListener = new TcpListener(LocalEndpoint);
     }
+    
     private bool Disposed { get; set; }
     private object LockHandle { get; } = new();
     
-    private TcpListener? TcpListener { get; set; }
+    private TcpListener TcpListener { get; }
     private ConcurrentDictionary<Guid, MessageContext> Contexts { get; } = new();
     private CancellationTokenSource ShutdownTokenSource { get; } = new();
 
@@ -27,13 +29,12 @@ public class Server : IAsyncDisposable, IDisposable
     
     public Task OpenAsync()
     {
-        TcpListener = new TcpListener(LocalEndpoint);
+        TcpListener.Start();
         return Task.CompletedTask;
     }
 
     public async Task RunAsync()
     {
-        if (TcpListener is null) throw new NullReferenceException("tcp listener is null");
         var tasks = new List<Task>();
         await Task.Factory.StartNew(() =>
         {
@@ -65,7 +66,7 @@ public class Server : IAsyncDisposable, IDisposable
         {
             if (Disposed) return;
             ShutdownTokenSource.Cancel();
-            TcpListener?.Stop();
+            TcpListener.Stop();
             Disposed = true;
         }
         await Task.WhenAll(Contexts.Select(pair => pair.Value.DisconnectAsync()).ToArray());
