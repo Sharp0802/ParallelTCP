@@ -25,8 +25,14 @@ internal static class Program
     private static async Task ServerOnClientConnected(object? sender, NetworkConnectionEventArgs args)
     {
         if (args.Context is null) return;
-        var channel = await args.Context.GetChannelAsync(Guid.Empty);
-        Clients.Add((args.Context, channel));
+        var context = args.Context;
+        var channel = await context.GetChannelAsync(Guid.Empty);
+        Clients.Add((context, channel));
+        context.Disconnected += (_, _) =>
+        {
+            Clients.Remove((context, channel));
+            return Task.CompletedTask;
+        };
         channel.MessageReceived += ChannelOnMessageReceived;
     }
 

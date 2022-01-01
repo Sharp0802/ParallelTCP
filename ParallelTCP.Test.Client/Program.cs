@@ -8,6 +8,8 @@ internal static class Program
 {
     private static async Task Main()
     {
+        Console.InputEncoding = Encoding.UTF8;
+        Console.OutputEncoding = Encoding.UTF8;
         Console.Write("write the endpoint to communicate:");
         if (!IPEndPoint.TryParse(Console.ReadLine() ?? string.Empty, out var endpoint))
         {
@@ -24,14 +26,18 @@ internal static class Program
         };
         while (true)
         {
-            var line = Console.ReadLine() ?? string.Empty;
-            if (line == ":q")
+            try
+            {
+                var line = Console.ReadLine() ?? string.Empty;
+                if (line == ":q") throw new IOException();
+                await channel.SendAsync(new SharedMessage(Guid.Empty, Encoding.UTF8.GetBytes(line)));
+            }
+            catch (IOException)
             {
                 await client.ShutdownAsync();
+                Console.WriteLine("disconnected.");
                 break;
             }
-
-            await channel.SendAsync(new SharedMessage(Guid.Empty, Encoding.UTF8.GetBytes(line)));
         }
     }
 }
