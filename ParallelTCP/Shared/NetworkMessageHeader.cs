@@ -5,6 +5,6 @@ namespace ParallelTCP.Shared;
 [type: CLSCompliant(true), NativeCppClass, Serializable]
 public struct NetworkMessageHeader
 {
-    public Guid StreamId;
+    public Guid ChannelGuid;
     public SharedMessageHeader SharedHeader;
 }

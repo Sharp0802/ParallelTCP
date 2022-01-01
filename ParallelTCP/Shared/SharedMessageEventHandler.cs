@@ -4,12 +4,12 @@ public delegate Task SharedMessageEventHandler(object? sender, SharedMessageEven
 
 public class SharedMessageEventArgs : EventArgs
 {
-    public SharedMessageEventArgs(Guid streamId, SharedMessage sharedMessage)
+    public SharedMessageEventArgs(Guid channelGuid, SharedMessage sharedMessage)
     {
-        StreamId = streamId;
+        ChannelGuid = channelGuid;
         SharedMessage = sharedMessage;
     }
 
-    public Guid StreamId { get; }
+    public Guid ChannelGuid { get; }
     public SharedMessage SharedMessage { get; }
 }
