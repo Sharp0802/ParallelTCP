@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using ParallelTCP.Common;
 using ParallelTCP.Shared;
+using ParallelTCP.Shared.Handlers;
 
 namespace ParallelTCP.ClientSide;
 
@@ -13,10 +15,12 @@ public class Client : IAsyncDisposable, IDisposable
     public Client(IPEndPoint endpoint)
     {
         EndPoint = endpoint;
+        TcpClient = new TcpClient();
+        MessageContext = new MessageContext(Guid.NewGuid(), TcpClient, new object(), ShutdownTokenSource.Token);
     }
 
-    private MessageContext? Context { get; set; }
     private CancellationTokenSource ShutdownTokenSource { get; } = new();
+    private TcpClient TcpClient { get; }
     
     /// <summary>
     /// Gets the remote <see cref="System.Net.IPEndPoint"/>
@@ -27,18 +31,18 @@ public class Client : IAsyncDisposable, IDisposable
     /// Gets the message context
     /// </summary>
     /// <exception cref="NullReferenceException"><see cref="ParallelTCP.ClientSide.Client.Context"/> isn't initialized.</exception>
-    public MessageContext MessageContext =>
-        Context ?? throw new NullReferenceException("the message context isn't initialized.");
+    public MessageContext MessageContext { get; }
+
+    public event NetworkConnectionEventHandler? Connected;
 
     /// <summary>
     /// Start receiving messages.
     /// </summary>
     public async Task RunAsync()
     {
-        var client = new TcpClient();
-        await client.ConnectAsync(EndPoint.Address, EndPoint.Port);
-        Context = new MessageContext(Guid.NewGuid(), client, new object(), ShutdownTokenSource.Token);
-        await Context.RunAsync();
+        await TcpClient.ConnectAsync(EndPoint.Address, EndPoint.Port);
+        await Connected.InvokeAsync(this, new NetworkConnectionEventArgs(MessageContext));
+        await MessageContext.RunAsync();
     }
 
     /// <summary>
@@ -49,8 +53,7 @@ public class Client : IAsyncDisposable, IDisposable
     {
         ShutdownTokenSource.Cancel();
         ShutdownTokenSource.Dispose();
-        if (Context is not null)
-            await Context.DisconnectAsync();
+        await MessageContext.DisconnectAsync();
     }
     
     /// <inheritdoc cref="ParallelTCP.ClientSide.Client.ShutdownAsync()"/>
