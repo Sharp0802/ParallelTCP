@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP", "ParallelTCP\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP.Test.Server", "ParallelTCP.Test.Server\ParallelTCP.Test.Server.csproj", "{6F7AD6B2-B636-4869-8637-9DB295084CE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP.Test.Client", "ParallelTCP.Test.Client\ParallelTCP.Test.Client.csproj", "{F431158E-79C8-4BF7-A0C0-63105349AD30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{6F7AD6B2-B636-4869-8637-9DB295084CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F7AD6B2-B636-4869-8637-9DB295084CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F7AD6B2-B636-4869-8637-9DB295084CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
