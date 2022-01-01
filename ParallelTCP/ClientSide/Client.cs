@@ -1,12 +1,10 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using ParallelTCP.Common;
 using ParallelTCP.Shared;
-using ParallelTCP.Shared.Handlers;
 
 namespace ParallelTCP.ClientSide;
 
-public class Client : IAsyncDisposable, IDisposable
+public class Client : IAsyncDisposable
 {
     /// <summary>
     /// Create new <see cref="ParallelTCP.ClientSide.Client"/>
@@ -14,55 +12,34 @@ public class Client : IAsyncDisposable, IDisposable
     /// <param name="endpoint">The <see cref="System.Net.EndPoint"/> to connect</param>
     public Client(IPEndPoint endpoint)
     {
-        EndPoint = endpoint;
-        TcpClient = new TcpClient();
-        MessageContext = new MessageContext(Guid.NewGuid(), TcpClient, new object(), ShutdownTokenSource.Token);
+        RemoteEndPoint = endpoint;
     }
 
-    private CancellationTokenSource ShutdownTokenSource { get; } = new();
-    private TcpClient TcpClient { get; }
+    private Task Runner { get; set; } = Task.CompletedTask;
     
-    /// <summary>
-    /// Gets the remote <see cref="System.Net.IPEndPoint"/>
-    /// </summary>
-    public IPEndPoint EndPoint { get; }
+    public IPEndPoint RemoteEndPoint { get; }
+    public MessageContext? MessageContext { get; private set; }
 
-    /// <summary>
-    /// Gets the message context
-    /// </summary>
-    /// <exception cref="NullReferenceException"><see cref="ParallelTCP.ClientSide.Client.Context"/> isn't initialized.</exception>
-    public MessageContext MessageContext { get; }
-
-    public event NetworkConnectionEventHandler? Connected;
-
-    /// <summary>
-    /// Start receiving messages.
-    /// </summary>
-    public async Task RunAsync()
+    public async Task OpenAsync()
     {
-        await TcpClient.ConnectAsync(EndPoint.Address, EndPoint.Port);
-        await Connected.InvokeAsync(this, new NetworkConnectionEventArgs(MessageContext));
-        await MessageContext.RunAsync();
+        var client = new TcpClient();
+        await client.ConnectAsync(RemoteEndPoint.Address, RemoteEndPoint.Port);
+        MessageContext = new MessageContext(Guid.Empty, client, new object(), CancellationToken.None);
+        Runner = MessageContext.RunAsync();
     }
 
-    /// <summary>
-    /// Disconnects and Disposes this <see cref="ParallelTCP.ClientSide.Client"/> instance and requests that the
-    /// underlying TCP connection be closed.
-    /// </summary>
     public async Task ShutdownAsync()
     {
-        ShutdownTokenSource.Cancel();
-        ShutdownTokenSource.Dispose();
-        await MessageContext.DisconnectAsync();
+        if (MessageContext is not null)
+            await MessageContext.DisconnectAsync();
+        await Runner;
     }
-    
-    /// <inheritdoc cref="ParallelTCP.ClientSide.Client.ShutdownAsync()"/>
+
     public async ValueTask DisposeAsync()
     {
         await ShutdownAsync();
     }
 
-    /// <inheritdoc cref="ParallelTCP.ClientSide.Client.ShutdownAsync()"/>
     public void Dispose()
     {
         ShutdownAsync().Wait();
