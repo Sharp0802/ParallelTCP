@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using ParallelTCP.ServerSide;
 
 namespace ParallelTCP.Shared;
 
@@ -7,10 +7,10 @@ public delegate Task NetworkConnectionEventHandler(object? sender, NetworkMessag
 
 public class NetworkConnectionEventArgs : EventArgs
 {
-    public NetworkConnectionEventArgs(IPEndPoint endpoint)
+    public NetworkConnectionEventArgs(MessageContext context)
     {
-        Endpoint = endpoint;
+        Context = context;
     }
 
-    public IPEndPoint Endpoint { get; }
+    public MessageContext Context { get; }
 }
