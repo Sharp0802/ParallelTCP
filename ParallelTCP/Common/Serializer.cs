@@ -1,8 +1,10 @@
-﻿namespace ParallelTCP.Common;
+﻿using ParallelTCP.Shared;
+
+namespace ParallelTCP.Common;
 
 public static class Serializer
 {
-    public static bool TryReadUnsafe<T>(this Stream stream, out T? dst) where T : unmanaged
+    private static bool TryReadUnsafe<T>(this Stream stream, out T? dst) where T : unmanaged
     {
         try
         {
@@ -28,7 +30,7 @@ public static class Serializer
         }
     }
 
-    public static bool TryReadUnsafe(this Stream stream, int length, out byte[]? dst)
+    private static bool TryReadUnsafe(this Stream stream, int length, out byte[]? dst)
     {
         try
         {
@@ -45,28 +47,23 @@ public static class Serializer
         }
     }
 
-    public static bool TryWriteUnsafe<T>(this Stream stream, T src) where T : unmanaged
+    internal static bool TryReadNetworkMessage(this Stream? stream, object locker, out NetworkMessage? msg)
     {
-        try
+        msg = null;
+        NetworkMessageHeader? header;
+        byte[]? content;
+        lock (locker)
         {
-            unsafe
-            {
-                var buffer = new byte[sizeof(T)];
-                fixed (byte* pBuffer = buffer)
-                    Buffer.MemoryCopy(&src, pBuffer, sizeof(T), sizeof(T));
-                stream.Write(buffer, 0, buffer.Length);
-            }
-
-            return true;
+            if (stream is null ||
+                !stream.TryReadUnsafe(out header) || 
+                !stream.TryReadUnsafe(header!.Value.SharedHeader.Length, out content))
+                return false;
         }
-        catch (Exception e)
-        {
-            if (e is not (IOException or ObjectDisposedException)) throw;
-            return false;
-        }
+        msg = new NetworkMessage(header.Value, content!);
+        return true;
     }
 
-    public static bool TryWriteUnsafe(this Stream stream, byte[] src)
+    private static bool TryWriteUnsafe(this Stream stream, byte[] src)
     {
         try
         {
@@ -77,6 +74,15 @@ public static class Serializer
         {
             if (e is not (IOException or ObjectDisposedException)) throw;
             return false;
+        }
+    }
+
+    internal static bool TryWriteMessage(this Stream? stream, object locker, IMessage msg)
+    {
+        var bytes = msg.ToBytes();
+        lock (locker)
+        {
+            return stream is not null && TryWriteUnsafe(stream, bytes);
         }
     }
 }
