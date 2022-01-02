@@ -18,6 +18,7 @@ internal static class Program
         }
         await using var client = new ClientSide.Client(endpoint);
         await client.OpenAsync();
+        Console.WriteLine("connection established.");
         var channel = await client.MessageContext!.GetChannelAsync(Guid.Empty);
         channel.MessageReceived += (_, args) =>
         {
@@ -39,5 +40,7 @@ internal static class Program
                 break;
             }
         }
+
+        Console.ReadKey();
     }
 }
