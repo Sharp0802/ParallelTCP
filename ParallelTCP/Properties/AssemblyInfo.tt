@@ -1,0 +1,33 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#
+    var output = File.ReadAllText(Host.ResolvePath("AssemblyInfo.cs"));
+    var pattern = new Regex("AssemblyVersion\\(\"(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<revision>\\d+)\\.(?<build>\\d+)\"\\)");
+    var matches = pattern.Matches(output);
+    if(matches.Count == 1)
+    {
+        _major = Convert.ToInt32(matches[0].Groups["major"].Value);
+        _minor = Convert.ToInt32(matches[0].Groups["minor"].Value);
+        _build = Convert.ToInt32(matches[0].Groups["build"].Value) + 1;
+        _revision = Convert.ToInt32(matches[0].Groups["revision"].Value);
+        if(Host.ResolveParameterValue("-","-","BuildConfiguration") == "Release")
+            _revision++;
+    }
+#>
+
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Resources;
+
+[assembly: AssemblyVersion("<#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #>")]
+[assembly: AssemblyFileVersion("<#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #>")]
+
+<#+
+    private int _major = 1;
+    private int _minor = 0;
+    private int _revision = 0;
+    private int _build = 0;
+#>

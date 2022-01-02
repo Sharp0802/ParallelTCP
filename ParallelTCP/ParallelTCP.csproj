@@ -11,6 +11,7 @@
         <Deterministic>false</Deterministic>
     </PropertyGroup>
     <PropertyGroup>
+        <Version>$(AssemblyVersion)</Version>
         <Authors>Sharp0802</Authors>
         <Description>A simple TCP client/server implementation with messaging channels.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -21,5 +22,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     </ItemGroup>
+    
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="&quot;$(DevEnvDir)TextTransform.exe&quot; -a !!BuildConfiguration!$(Configuration) &quot;$(ProjectDir)Properties\AssemblyInfo.tt&quot;" />
+    </Target>
 
 </Project>
