@@ -20,18 +20,18 @@ public class Client : IAsyncDisposable
     /// <summary>
     /// Gets the remote endpoint
     /// </summary>
-    /// <returns>The <see cref="System.Net.EndPoint"/> with which the <see cref="Client"/>
+    /// <returns>The <see cref="EndPoint"/> with which the <see cref="Client"/>
     /// communicating.</returns>
     public IPEndPoint RemoteEndPoint { get; }
     
     /// <summary>
     /// Gets the message context
     /// </summary>
-    /// <returns>The <see cref="ParallelTCP.Shared.MessageContext"/> that the
-    /// <see cref="ParallelTCP.ServerSide.Server"/> is using for communications.</returns>
+    /// <returns>The <see cref="Shared.MessageContext"/> that the
+    /// <see cref="ServerSide.Server"/> is using for communications.</returns>
     public MessageContext? MessageContext { get; private set; }
 
-    /// <inheritdoc cref="ParallelTCP.Shared.MessageContext.RunAsync()"/>
+    /// <inheritdoc cref="MessageContext.RunAsync()"/>
     public async Task OpenAsync()
     {
         var client = new TcpClient();

@@ -5,7 +5,7 @@ public class SharedMessage : IMessage
     /// <summary>
     /// Allocate new <see cref="SharedMessage"/>
     /// </summary>
-    /// <param name="replyTo"><see cref="System.Guid"/> identifier of the message to reply</param>
+    /// <param name="replyTo"><see cref="Guid"/> identifier of the message to reply</param>
     /// <param name="content">the content of a message</param>
     public SharedMessage(Guid replyTo, byte[] content)
     {

@@ -53,7 +53,7 @@ public class MessageChannel
     }
 
     /// <summary>
-    /// Send <see cref="ParallelTCP.Shared.Messages.SharedMessage"/> asynchronously
+    /// Send <see cref="SharedMessage"/> asynchronously
     /// </summary>
     /// <param name="msg">a message to send</param>
     /// <exception cref="IOException">if already disconnected from server/client.</exception>
@@ -78,7 +78,7 @@ public class MessageChannel
     }
 
     /// <summary>
-    /// Send <see cref="ParallelTCP.Shared.Messages.SharedMessage"/> asynchronously
+    /// Send <see cref="SharedMessage"/> asynchronously
     /// </summary>
     /// <param name="msg">a message to send</param>
     /// <param name="options">message sending options</param>

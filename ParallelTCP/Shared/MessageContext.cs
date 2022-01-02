@@ -11,14 +11,14 @@ namespace ParallelTCP.Shared;
 public sealed class MessageContext : IAsyncDisposable, IDisposable
 {
     /// <summary>
-    /// Allocate new <see cref="ParallelTCP.Shared.MessageContext"/>
+    /// Allocate new <see cref="MessageContext"/>
     /// </summary>
     /// <param name="guid"><see cref="System.Guid"/> identifier of MessageContext</param>
-    /// <param name="client"><see cref="System.Net.Sockets.TcpClient"/> for this MessageContext</param>
-    /// <param name="lockHandle">A lock handle for <see cref="System.Net.Sockets.NetworkStream"/> of client</param>
-    /// <param name="token"><see cref="System.Threading.CancellationToken"/> for shutting down</param>
-    /// <exception cref="System.InvalidOperationException"><paramref name="client"/> is not connected to a remote host.</exception>
-    /// <exception cref="System.ObjectDisposedException"><paramref name="client"/> has been closed.</exception>
+    /// <param name="client"><see cref="TcpClient"/> for this MessageContext</param>
+    /// <param name="lockHandle">A lock handle for <see cref="NetworkStream"/> of client</param>
+    /// <param name="token"><see cref="CancellationToken"/> for shutting down</param>
+    /// <exception cref="InvalidOperationException"><paramref name="client"/> is not connected to a remote host.</exception>
+    /// <exception cref="ObjectDisposedException"><paramref name="client"/> has been closed.</exception>
     public MessageContext(Guid guid, TcpClient client, object lockHandle, CancellationToken token)
     {
         Guid = guid;
@@ -47,22 +47,22 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
     /// <summary>
     /// Gets the remote endpoint
     /// </summary>
-    /// <returns>The <see cref="System.Net.EndPoint"/> with which the <see cref="ParallelTCP.Shared.MessageContext"/>
+    /// <returns>The <see cref="EndPoint"/> with which the <see cref="MessageContext"/>
     /// communicating.</returns>
     public EndPoint? RemoteEndpoint { get; }
 
     /// <summary>
     /// Gets the local endpoint
     /// </summary>
-    /// <returns>The <see cref="System.Net.EndPoint"/> that the <see cref="ParallelTCP.Shared.MessageContext"/> is using
+    /// <returns>The <see cref="EndPoint"/> that the <see cref="MessageContext"/> is using
     /// for communications.</returns>
     public EndPoint? LocalEndpoint { get; }
 
     /// <summary>
-    /// Gets a value indicating whether the underlying <see cref="System.Net.Sockets.TcpClient"/> for a
-    /// <see cref="ParallelTCP.Shared.MessageContext"/> is connected to a remote host.
+    /// Gets a value indicating whether the underlying <see cref="TcpClient"/> for a
+    /// <see cref="MessageContext"/> is connected to a remote host.
     /// </summary>
-    /// <returns>true if the <see cref="ParallelTCP.Shared.MessageContext.Client"/> tcp client was connected to a remote
+    /// <returns>true if the <see cref="Client"/> tcp client was connected to a remote
     /// resource as of the most recent operation; otherwise, false</returns>
     public bool Connected
     {
@@ -77,7 +77,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
     private event NetworkMessageEventHandler? MessageReceived;
 
     /// <summary>
-    /// Raised when the <see cref="ParallelTCP.Shared.MessageContext"/> is disconnected.
+    /// Raised when the <see cref="MessageContext"/> is disconnected.
     /// </summary>
     public event NetworkConnectionEventHandler? Disconnected;
 
@@ -101,12 +101,12 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
     }
 
     /// <summary>
-    /// Allocate and Assign new <see cref="ParallelTCP.Shared.MessageChannel"/> to the
-    /// <see cref="ParallelTCP.Shared.MessageContext"/> with <paramref name="guid"/>. if the <paramref name="guid"/>
-    /// does not already exist, or returns the existing <see cref="ParallelTCP.Shared.MessageChannel"/> if the
+    /// Allocate and Assign new <see cref="MessageChannel"/> to the
+    /// <see cref="MessageContext"/> with <paramref name="guid"/>. if the <paramref name="guid"/>
+    /// does not already exist, or returns the existing <see cref="MessageChannel"/> if the
     /// <paramref name="guid"/> exists.
     /// </summary>
-    /// <param name="guid">The guid of the <see cref="ParallelTCP.Shared.MessageChannel"/> to allocate and assign</param>
+    /// <param name="guid">The guid of the <see cref="MessageChannel"/> to allocate and assign</param>
     /// <returns>the requested channel for the <paramref name="guid"/>.</returns>
     public Task<MessageChannel> GetChannelAsync(Guid guid)
     {
@@ -141,7 +141,7 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
     }
 
     /// <summary>
-    /// Disconnects and Disposes this <see cref="ParallelTCP.Shared.MessageContext"/> instance and requests that the
+    /// Disconnects and Disposes this <see cref="MessageContext"/> instance and requests that the
     /// underlying TCP connection be closed.
     /// </summary>
     public async Task DisconnectAsync()
@@ -157,13 +157,13 @@ public sealed class MessageContext : IAsyncDisposable, IDisposable
         await Disconnected.InvokeAsync(this, new NetworkConnectionEventArgs(this));
     }
 
-    /// <inheritdoc cref="ParallelTCP.Shared.MessageContext.DisconnectAsync()"/>
+    /// <inheritdoc cref="DisconnectAsync()"/>
     public async ValueTask DisposeAsync()
     {
         await DisconnectAsync();
     }
 
-    /// <inheritdoc cref="ParallelTCP.Shared.MessageContext.DisconnectAsync()"/>
+    /// <inheritdoc cref="DisconnectAsync()"/>
     public void Dispose()
     {
         DisconnectAsync().Wait(CancellationToken.None);
