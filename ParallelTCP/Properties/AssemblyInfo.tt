@@ -1,10 +1,10 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".xml" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#
-    var output = File.ReadAllText(Host.ResolvePath("AssemblyInfo.cs"));
-    var pattern = new Regex("AssemblyVersion\\(\"(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<revision>\\d+)\\.(?<build>\\d+)\"\\)");
+    var output = File.ReadAllText(Host.ResolvePath("AssemblyInfo.xml"));
+    var pattern = new Regex("<Version>(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<revision>\\d+)\\.(?<build>\\d+)</Version>");
     var matches = pattern.Matches(output);
     if(matches.Count == 1)
     {
@@ -17,13 +17,13 @@
     }
 #>
 
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Resources;
-
-[assembly: AssemblyVersion("<#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #>")]
-[assembly: AssemblyFileVersion("<#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #>")]
+<Project>
+    <PropertyGroup>
+        <Version><#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #></Version>
+        <AssemblyVersion><#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #></AssemblyVersion>
+        <FileVersion><#= _major #>.<#= _minor #>.<#= _revision #>.<#= _build #></FileVersion>
+    </PropertyGroup>
+</Project>
 
 <#+
     private int _major = 1;
