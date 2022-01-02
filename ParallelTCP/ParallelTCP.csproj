@@ -12,7 +12,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <Authors>Sharp0802</Authors>
-        <Description>A simple TCP client/server implemention with messaging channels.</Description>
+        <Description>A simple TCP client/server implementation with messaging channels.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/Sharp0802/ParallelTCP</PackageProjectUrl>
         <PackageTags>socket;tcp;network;server;client;async</PackageTags>
