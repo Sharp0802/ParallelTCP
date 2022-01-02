@@ -10,13 +10,13 @@
 
 ## Introduce
 
-ParallelTCP is a TCP library that provides simple tcp client/server with message channels.
+ParallelTCP는 간단한 TCP 클라이언트와 서버, 메시지 채널을 제공합니다. 
 
 ## Features
 
-- TCP server/client
-- Asynchronous message channels
-- High level of abstraction and asynchronization
+- TCP 서버/클라이언트
+- 비동기 메시지 채널
+- 높은 수준의 추상화/비동기성
 
 ## Installation
 
@@ -40,11 +40,11 @@ dotnet add package ParallelTCP --version 1.0.3.4
 
 ## Usage
 
-Recommended encoding is the UTF-16 format using the little endian byte order.
-Use `Encoding.Unicode` to use UTF-16 little endian.
+추천하는 인코딩은 리틀 엔디안 UTF-16입니다.
+간단히 `Encoding.Unicode`를 사용하시면 됩니다.
 
 ```c#
-// sample code of chat client
+// 클라이언트 측 샘플 코드
 private static async Task Main()
 {
     Console.InputEncoding = Encoding.Unicode;
@@ -90,7 +90,7 @@ private static async Task Main()
 ```
 
 ```c#
-// sample code of chat server
+// 서버 측 샘플 코드
 private static async Task Main()
 {
     Console.Write("write the port to communicate:");
@@ -138,6 +138,6 @@ private static async Task ChannelOnMessageReceived(object? sender, SharedMessage
 }
 ```
 
-If you want to view all codes of sample, Go to 
-[Client](./ParallelTCP.Test.Client/Program.cs) &
-[Server](./ParallelTCP.Test.Server/Program.cs).
+전체 코드를 확인하고 싶으시다면,
+[클라이언트](./ParallelTCP.Test.Client/Program.cs)와
+[서버](./ParallelTCP.Test.Server/Program.cs)를 확인하십시오.
