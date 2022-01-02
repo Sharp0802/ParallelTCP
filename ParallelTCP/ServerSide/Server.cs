@@ -40,6 +40,11 @@ public class Server : IAsyncDisposable, IDisposable
     public event NetworkConnectionEventHandler? ClientConnected;
     
     /// <summary>
+    /// Raises when a client disconnected
+    /// </summary>
+    public event NetworkConnectionEventHandler? ClientDisconnected;
+    
+    /// <summary>
     /// Raises when the <see cref="ParallelTCP.ServerSide.Server"/> shut down.
     /// </summary>
     public event NetworkConnectionEventHandler? Shutdown;
@@ -76,7 +81,11 @@ public class Server : IAsyncDisposable, IDisposable
                 {
                     break;
                 }
-                context.Disconnected += (_, _) => Task.FromResult(Containers.TryRemove(guid, out _));
+                context.Disconnected += async (sender, args) =>
+                {
+                    Containers.TryRemove(guid, out _);
+                    await ClientDisconnected.InvokeAsync(this, new NetworkConnectionEventArgs(args.Context));
+                };
                 tasks.Add(ClientConnected.InvokeAsync(this, new NetworkConnectionEventArgs(context)));
             }
         }, TaskCreationOptions.None);
