@@ -1,10 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP", "ParallelTCP\ParallelTCP.csproj", "{38970136-30CA-4D08-9919-C883E7F1AA71}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelTCP", "ParallelTCP\ParallelTCP.csproj", "{38970136-30CA-4D08-9919-C883E7F1AA71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP.Test.Server", "ParallelTCP.Test.Server\ParallelTCP.Test.Server.csproj", "{6F7AD6B2-B636-4869-8637-9DB295084CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelTCP.Test.Server", "ParallelTCP.Test.Server\ParallelTCP.Test.Server.csproj", "{6F7AD6B2-B636-4869-8637-9DB295084CE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelTCP.Test.Client", "ParallelTCP.Test.Client\ParallelTCP.Test.Client.csproj", "{F431158E-79C8-4BF7-A0C0-63105349AD30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelTCP.Test.Client", "ParallelTCP.Test.Client\ParallelTCP.Test.Client.csproj", "{F431158E-79C8-4BF7-A0C0-63105349AD30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +27,11 @@ Global
 		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F431158E-79C8-4BF7-A0C0-63105349AD30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9F4AF00-FD08-41F6-BA28-565113CB552A}
 	EndGlobalSection
 EndGlobal
