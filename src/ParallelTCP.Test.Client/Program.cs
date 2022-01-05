@@ -8,8 +8,6 @@ internal static class Program
 {
     private static async Task Main()
     {
-        Console.InputEncoding = Encoding.Unicode;
-        Console.OutputEncoding = Encoding.Unicode;
         Console.Write("write the endpoint to communicate:");
         if (!IPEndPoint.TryParse(Console.ReadLine() ?? string.Empty, out var endpoint))
         {
@@ -22,7 +20,7 @@ internal static class Program
         var channel = await client.MessageContext!.GetChannelAsync(Guid.Empty);
         channel.MessageReceived += (_, args) =>
         {
-            Console.WriteLine(Encoding.Unicode.GetString(args.SharedMessage.Content));
+            Console.WriteLine(Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, args.SharedMessage.Content)));
             return Task.CompletedTask;
         };
         while (true)
@@ -31,7 +29,7 @@ internal static class Program
             {
                 var line = Console.ReadLine() ?? string.Empty;
                 if (line == ":q") throw new IOException();
-                await channel.SendAsync(new SharedMessage(Guid.Empty, Encoding.Unicode.GetBytes(line)));
+                await channel.SendAsync(new SharedMessage(Guid.Empty, Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(line))));
             }
             catch (IOException)
             {
