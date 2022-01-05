@@ -1,3 +1,15 @@
+###############
+#    folder   #
+###############
+/**/DROP/
+/**/TEMP/
+/**/packages/
+/**/bin/
+/**/obj/
+/_site/
+/api/
+
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/rider,visualstudio,csharp,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=rider,visualstudio,csharp,dotnetcore
