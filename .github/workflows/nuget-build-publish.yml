@@ -1,12 +1,10 @@
 name: Nuget - Build and Publish
 
 on:
-  create:
-    branches: [ release/** ]
   push:
-    branches: [ master ]
+    branches: [ release ]
   pull_request:
-    branches: [ master ]
+    branches: [ release ]
 
 jobs:
   build:
@@ -39,6 +37,5 @@ jobs:
       run: dotnet pack -c Release
       
     - name: Publish
-      if: startsWith(github.ref, 'refs/heads/release')
       working-directory: src/ParallelTCP/bin
       run: nuget push **/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
