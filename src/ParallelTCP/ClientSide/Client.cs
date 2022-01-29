@@ -20,8 +20,7 @@ public class Client : IAsyncDisposable, IDisposable
     /// <summary>
     /// Gets the remote endpoint
     /// </summary>
-    /// <returns>The <see cref="EndPoint"/> with which the <see cref="Client"/>
-    /// communicating.</returns>
+    /// <returns>The <see cref="EndPoint"/> with which the <see cref="Client"/> communicating.</returns>
     public IPEndPoint RemoteEndPoint { get; }
     
     /// <summary>
