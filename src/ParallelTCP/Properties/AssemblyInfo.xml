@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
     <PropertyGroup>
-        <Version>1.0.3.16</Version>
-        <AssemblyVersion>1.0.3.16</AssemblyVersion>
-        <FileVersion>1.0.3.16</FileVersion>
+        <Version>1.0.4.0</Version>
+        <AssemblyVersion>1.0.4.0</AssemblyVersion>
+        <FileVersion>1.0.4.0</FileVersion>
     </PropertyGroup>
 </Project>
