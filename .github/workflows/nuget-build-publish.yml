@@ -1,0 +1,44 @@
+name: Nuget - Build and Publish
+
+on:
+  create:
+    branches: [ release/** ]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        include-prerelease: true
+        
+    - name: Restore dependencies
+      working-directory: src/ParallelTCP
+      run: dotnet restore
+      
+    - name: Build
+      working-directory: src/ParallelTCP
+      run: dotnet build --no-restore -c Release
+      
+    - name: Packaging
+      working-directory: src/ParallelTCP
+      run: dotnet pack -c Release
+      
+    - name: Publish
+      if: startsWith(github.ref, 'refs/heads/release')
+      working-directory: src/ParallelTCP/bin
+      run: nuget push **/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
