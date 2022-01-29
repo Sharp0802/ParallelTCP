@@ -2,7 +2,7 @@
 
 namespace ParallelTCP.Common;
 
-public static class Serializer
+internal static class Serializer
 {
     private static bool TryReadUnsafe<T>(this Stream stream, out T? dst) where T : unmanaged
     {
