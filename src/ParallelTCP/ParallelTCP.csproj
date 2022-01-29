@@ -17,6 +17,7 @@
 		<Description>A simple TCP client/server implementation with messaging channels.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Sharp0802/ParallelTCP</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Sharp0802/ParallelTCP</RepositoryUrl>
 		<PackageTags>socket;tcp;network;server;client;async</PackageTags>
 	</PropertyGroup>
 
