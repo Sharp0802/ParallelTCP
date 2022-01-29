@@ -10,5 +10,8 @@ public class NetworkConnectionEventArgs : EventArgs
         Context = context;
     }
 
+    /// <summary>
+    /// Gets connected <see cref="MessageContext"/>
+    /// </summary>
     public MessageContext? Context { get; }
 }

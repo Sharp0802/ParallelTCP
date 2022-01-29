@@ -12,6 +12,13 @@ public class SharedMessageEventArgs : EventArgs
         SharedMessage = sharedMessage;
     }
 
+    /// <summary>
+    /// Gets caused <see cref="MessageChannel"/>'s identifier
+    /// </summary>
     public Guid ChannelGuid { get; }
+    
+    /// <summary>
+    /// Gets caused <see cref="SharedMessage"/>
+    /// </summary>
     public SharedMessage SharedMessage { get; }
 }

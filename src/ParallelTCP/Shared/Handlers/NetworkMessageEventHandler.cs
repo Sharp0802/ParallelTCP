@@ -11,5 +11,8 @@ public class NetworkMessageEventArgs : EventArgs
         Message = message;
     }
 
+    /// <summary>
+    /// Gets caused <see cref="NetworkMessage"/>
+    /// </summary>
     public NetworkMessage Message { get; }
 }
