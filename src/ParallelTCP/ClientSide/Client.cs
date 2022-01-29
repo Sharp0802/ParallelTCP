@@ -4,7 +4,7 @@ using ParallelTCP.Shared;
 
 namespace ParallelTCP.ClientSide;
 
-public class Client : IAsyncDisposable
+public class Client : IAsyncDisposable, IDisposable
 {
     /// <summary>
     /// Create new <see cref="Client"/>
