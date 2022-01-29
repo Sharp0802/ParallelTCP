@@ -1,10 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	
-	<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
-	<PropertyGroup>
-		<TransformOnBuild>true</TransformOnBuild>
-	</PropertyGroup>
 
+	<Import Project="Properties/AssemblyInfo.xml" />
+	
 	<PropertyGroup>
 		<OutputType>library</OutputType>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -27,20 +24,8 @@
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update="Properties\AssemblyInfo.tt">
-	    <Generator>TextTemplatingFileGenerator</Generator>
-	    <LastGenOutput>AssemblyInfo.xml</LastGenOutput>
-	  </None>
-	  <None Update="Properties\AssemblyInfo.xml">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>AssemblyInfo.tt</DependentUpon>
-	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-	</ItemGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec WorkingDirectory="$(ProjectDir)/../ParallelTCP.Versioning" Command="dotnet run" />
+	</Target>
 
 </Project>
