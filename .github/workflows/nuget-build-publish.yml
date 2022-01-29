@@ -35,4 +35,4 @@ jobs:
       
     - name: Publish
       working-directory: src/ParallelTCP/bin
-      run: dotnet nuget push **/*.nupkg --source "https://nuget.pkg.github.com/sharp0802/index.json" --api-key ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push **/*.nupkg --source "https://nuget.pkg.github.com/sharp0802/index.json" --api-key ${{secrets.GITHUB_TOKEN}}
