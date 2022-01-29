@@ -4,3 +4,9 @@
   items:
   - name: Setup
     href: Getting Started/Setup.md
+  - name: Quick Start
+    href: Getting Started/QuickStart.md
+- name: Samples
+  items:
+  - name: Chatting Via Console
+    href: Samples/ChatSample.md
