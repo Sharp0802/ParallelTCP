@@ -1,0 +1,419 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/ParallelTCP/ParallelTCP/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.ClientSide.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.ClientSide.Client.html",
+          "hash": "8/jU/OXJHilB8qXY+DiqAZWeleSC3HUS7/Gc97k2xos="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.ClientSide.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.ClientSide.html",
+          "hash": "VzaBlYc0Ij7tdlsrGu/AGvo4sERXOlQYxRxLNb/uMOU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.ServerSide.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.ServerSide.Server.html",
+          "hash": "j3iUyd2uQ82GvWtxVItAbczaDN8p7X76F5SooUiBgkE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.ServerSide.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.ServerSide.html",
+          "hash": "mzIH1iTrknQsS+YVlqZj1mexHS0Aj12CAtr8vt2Mq/c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.NetworkConnectionEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.NetworkConnectionEventArgs.html",
+          "hash": "CYUL4I6NR1DFhVvLhCMiMQ9qN0fHhdocRadgaQsCK7c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.NetworkConnectionEventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.NetworkConnectionEventHandler.html",
+          "hash": "oK0XJ1W2DUaC8H69plwAYHtpQ19naIp86ZazLrdSODk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.NetworkMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.NetworkMessageEventArgs.html",
+          "hash": "g62ORcXkI+SqzggKlu38D28vVv/teV4uPXumpFVQM9M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.NetworkMessageEventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.NetworkMessageEventHandler.html",
+          "hash": "VWKOlyA+DqNtMDQwHtOXrTn7jEZK8qtPE8dnfFlTyVg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.SharedMessageEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.SharedMessageEventArgs.html",
+          "hash": "KUxS1RyzqSp9dF1WRazoY70+qr2injd9chroibcNrEw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.SharedMessageEventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.SharedMessageEventHandler.html",
+          "hash": "XNHa4XxhXAN4fqk5Isd1EtqsCTrEKURta9uvHkU+rrA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Handlers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Handlers.html",
+          "hash": "t2TKyM8YKdNDU2I+xFTXcgoCYGBUtXX/GQwydAf+llk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.MessageChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.MessageChannel.html",
+          "hash": "728ujtmHYz6m59PifWz1xEpoQKddybaSPayPVE1x3Wk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.MessageContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.MessageContext.html",
+          "hash": "rtP0ZJit3LKdB8+BjK/pesLwTY4241yeXaMn9KVKwvE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.MessageTransmitOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.MessageTransmitOptions.html",
+          "hash": "WHHP4ueoB/Dy7cDdlPo2dKJGRc0M7kP5vHv3pfXVYeU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.IMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.IMessage.html",
+          "hash": "JbhEv9a3AwmLLMwsLVpa/lWv0fhG1RFo6VrCVRVALU0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.NetworkMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.NetworkMessage.html",
+          "hash": "AgFbnt8wjhpLqW3vt5jaO/vQTOkJwhClS4DsSlCs0VI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.NetworkMessageHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.NetworkMessageHeader.html",
+          "hash": "8QRONPQxRLigPrdRaNng+h7J4EpnNWF7CwNsnkzLHkw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.SharedMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.SharedMessage.html",
+          "hash": "2MF2pOb/EjOrSkY68a59yoSAOllY1be0Q0yYB4ggjBo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.SharedMessageHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.SharedMessageHeader.html",
+          "hash": "OVLJ10Ggq+Bznm/cHW+YXi6dEJhHkejlkek2BiLGUnk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.Messages.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.Messages.html",
+          "hash": "oLJmQw3gyKHqPysjbVDgGhmztiHasr2UqA0gRBrZB2c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ParallelTCP.Shared.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ParallelTCP.Shared.html",
+          "hash": "28QEqMozkDyjytwvofToeGn8pD7w2x3tZo462H17GO0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "SK36VlwmyNfGBFCOXPhY1+uXeoSvW37ONjmeuF+zifU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "QyqSXlVvgCInDLktyjH/NewnLHRKL7j2ApazzCWbzBk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/Getting Started/QuickStart.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Getting Started/QuickStart.html",
+          "hash": "Axr5PHmCHKUgeXfobhhPPGH60l02WpnHe3jVPWFA1SY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/Getting Started/Setup.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Getting Started/Setup.html",
+          "hash": "8OyUAniatPHlEuh74K3NzjfbpdaR+sQ9emkO3b5TaaU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/Samples/ChatSample.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Samples/ChatSample.html",
+          "hash": "KlGbv3VmwNSeVV8QvbHswCo5/V5HfHfto4S1IJZN3pI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "hXGAk6LvyXkIeeHbuevEh/6SJ2NUHEKgyFykKdUSTlY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "zGqyxn240PYEWpIVjLL0lkI4w1vluq/JoWKRXN+Jifk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "dwTfclIwUOToxifCO8CPiYLBr50So4PBxemosX1Nu8A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "zUf4PCuq/lif8wtopTINpTtRgN7H1rZVeNLzwbfBcs8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 6,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 21,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MessageContext
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MessageContext
+   ">
+    <meta name="generator" content="docfx 2.59.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ParallelTCP.Shared.MessageContext">
+  
+  
+  <h1 id="ParallelTCP_Shared_MessageContext" data-uid="ParallelTCP.Shared.MessageContext" class="text-break">Class MessageContext
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MessageContext</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ParallelTCP.Shared.html">ParallelTCP.Shared</a></h6>
+  <h6><strong>Assembly</strong>: ParallelTCP.dll</h6>
+  <h5 id="ParallelTCP_Shared_MessageContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class MessageContext : IAsyncDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext__ctor_Guid_System_Net_Sockets_TcpClient_System_Object_CancellationToken_.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.%23ctor(Guid%2CSystem.Net.Sockets.TcpClient%2CSystem.Object%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L22">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext__ctor_" data-uid="ParallelTCP.Shared.MessageContext.#ctor*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext__ctor_Guid_System_Net_Sockets_TcpClient_System_Object_CancellationToken_" data-uid="ParallelTCP.Shared.MessageContext.#ctor(Guid,System.Net.Sockets.TcpClient,System.Object,CancellationToken)">MessageContext(Guid, TcpClient, Object, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Allocate new <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MessageContext(Guid guid, TcpClient client, object lockHandle, CancellationToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Guid</span></td>
+        <td><span class="parametername">guid</span></td>
+        <td><p><span class="xref">System.Guid</span> identifier of MessageContext</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Net.Sockets.TcpClient</span></td>
+        <td><span class="parametername">client</span></td>
+        <td><p><span class="xref">System.Net.Sockets.TcpClient</span> for this MessageContext</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">lockHandle</span></td>
+        <td><p>A lock handle for <span class="xref">System.Net.Sockets.NetworkStream</span> of client</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">token</span></td>
+        <td><p><see cref="!:CancellationToken"></see> for shutting down</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_Connected.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.Connected%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L67">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_Connected_" data-uid="ParallelTCP.Shared.MessageContext.Connected*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_Connected" data-uid="ParallelTCP.Shared.MessageContext.Connected">Connected</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the underlying <span class="xref">System.Net.Sockets.TcpClient</span> for a
+<a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> is connected to a remote host.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Connected { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if the <span class="xref">ParallelTCP.Shared.MessageContext.Client</span> tcp client was connected to a remote
+resource as of the most recent operation; otherwise, false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_Guid.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.Guid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L45">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_Guid_" data-uid="ParallelTCP.Shared.MessageContext.Guid*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_Guid" data-uid="ParallelTCP.Shared.MessageContext.Guid">Guid</h4>
+  <div class="markdown level1 summary"><p>Gets the identifier</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid Guid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Guid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_LocalEndpoint.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.LocalEndpoint%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L59">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_LocalEndpoint_" data-uid="ParallelTCP.Shared.MessageContext.LocalEndpoint*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_LocalEndpoint" data-uid="ParallelTCP.Shared.MessageContext.LocalEndpoint">LocalEndpoint</h4>
+  <div class="markdown level1 summary"><p>Gets the local endpoint</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EndPoint LocalEndpoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Net.EndPoint</span></td>
+        <td><p>The <span class="xref">System.Net.EndPoint</span> that the <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> is using
+for communications.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_RemoteEndpoint.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.RemoteEndpoint%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L52">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_RemoteEndpoint_" data-uid="ParallelTCP.Shared.MessageContext.RemoteEndpoint*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_RemoteEndpoint" data-uid="ParallelTCP.Shared.MessageContext.RemoteEndpoint">RemoteEndpoint</h4>
+  <div class="markdown level1 summary"><p>Gets the remote endpoint</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EndPoint RemoteEndpoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Net.EndPoint</span></td>
+        <td><p>The <span class="xref">System.Net.EndPoint</span> with which the <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a>
+communicating.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_DisconnectAsync.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.DisconnectAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L147">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_DisconnectAsync_" data-uid="ParallelTCP.Shared.MessageContext.DisconnectAsync*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_DisconnectAsync" data-uid="ParallelTCP.Shared.MessageContext.DisconnectAsync">DisconnectAsync()</h4>
+  <div class="markdown level1 summary"><p>Disconnects and Disposes this <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> instance and requests that the
+underlying TCP connection be closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task DisconnectAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_Dispose.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L167">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_Dispose_" data-uid="ParallelTCP.Shared.MessageContext.Dispose*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_Dispose" data-uid="ParallelTCP.Shared.MessageContext.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Disconnects and Disposes this <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> instance and requests that the
+underlying TCP connection be closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_DisposeAsync.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.DisposeAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L161">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_DisposeAsync_" data-uid="ParallelTCP.Shared.MessageContext.DisposeAsync*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_DisposeAsync" data-uid="ParallelTCP.Shared.MessageContext.DisposeAsync">DisposeAsync()</h4>
+  <div class="markdown level1 summary"><p>Disconnects and Disposes this <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> instance and requests that the
+underlying TCP connection be closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async ValueTask DisposeAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ValueTask</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_GetChannelAsync_Guid_.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.GetChannelAsync(Guid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L111">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_GetChannelAsync_" data-uid="ParallelTCP.Shared.MessageContext.GetChannelAsync*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_GetChannelAsync_Guid_" data-uid="ParallelTCP.Shared.MessageContext.GetChannelAsync(Guid)">GetChannelAsync(Guid)</h4>
+  <div class="markdown level1 summary"><p>Allocate and Assign new <a class="xref" href="ParallelTCP.Shared.MessageChannel.html">MessageChannel</a> to the
+<a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> with <code data-dev-comment-type="paramref" class="paramref">guid</code>. if the <code data-dev-comment-type="paramref" class="paramref">guid</code>
+does not already exist, or returns the existing <a class="xref" href="ParallelTCP.Shared.MessageChannel.html">MessageChannel</a> if the
+<code data-dev-comment-type="paramref" class="paramref">guid</code> exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;MessageChannel&gt; GetChannelAsync(Guid guid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Guid</span></td>
+        <td><span class="parametername">guid</span></td>
+        <td><p>The guid of the <a class="xref" href="ParallelTCP.Shared.MessageChannel.html">MessageChannel</a> to allocate and assign</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="ParallelTCP.Shared.MessageChannel.html">MessageChannel</a>&gt;</td>
+        <td><p>the requested channel for the <code data-dev-comment-type="paramref" class="paramref">guid</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_RunAsync.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.RunAsync%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L119">View Source</a>
+  </span>
+  <a id="ParallelTCP_Shared_MessageContext_RunAsync_" data-uid="ParallelTCP.Shared.MessageContext.RunAsync*"></a>
+  <h4 id="ParallelTCP_Shared_MessageContext_RunAsync" data-uid="ParallelTCP.Shared.MessageContext.RunAsync">RunAsync()</h4>
+  <div class="markdown level1 summary"><p>Starts receiving messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task RunAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext_Disconnected.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext.Disconnected%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L82">View Source</a>
+  </span>
+  <h4 id="ParallelTCP_Shared_MessageContext_Disconnected" data-uid="ParallelTCP.Shared.MessageContext.Disconnected">Disconnected</h4>
+  <div class="markdown level1 summary"><p>Raised when the <a class="xref" href="ParallelTCP.Shared.MessageContext.html">MessageContext</a> is disconnected.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event NetworkConnectionEventHandler Disconnected</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ParallelTCP.Shared.Handlers.NetworkConnectionEventHandler.html">NetworkConnectionEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Sharp0802/ParallelTCP/new/master/apiSpec/new?filename=ParallelTCP_Shared_MessageContext.md&amp;value=---%0Auid%3A%20ParallelTCP.Shared.MessageContext%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Sharp0802/ParallelTCP/blob/master/src/ParallelTCP/Shared/MessageContext.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
